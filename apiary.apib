@@ -9,7 +9,7 @@ The SDK URL is http://developer.parrot.com/docs/reference/bebop_2/index.html#sca
 All the APIs will use an API-Key to secure the interaction. Each drone will have an identifier passed as a header.
 That will enable the API implementation to be used for managing multiple drones.
 
-## Register Drone [/Drone/Register]
+## Register Drone [/drone/register]
 Tell the microservices about the drone, so we can correlate Id to the correct drone
 
 ### Register [POST]
@@ -32,8 +32,14 @@ drone we can assume the drone Id will be 1
            
         + droneId: 1 (number)  - Drone Id to be used in all the subsequent API calls
 
-## Flight Movement [/Drone/{DroneId}/Nav/Move]
+## Flight Movement [/drone/{droneId}/nav/move]
 Movement commands based telling the drone what angles of yaw, role and rotation etc to use.
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
     
 ### Move Drone [PUT]
 Returns all MRA Artists that match the specified criteria.
@@ -46,16 +52,20 @@ Returns all MRA Artists that match the specified criteria.
             droneId: 1234
 
     + Attributes
-    
-        + droneId: 1 (number)  - Drone Id to be used in all the subsequent API calls
         
         + movement (Move)
 
 + Response 200 (text/plain)
 
-## Flight Movement by Location [/Drone/{DroneId}/Nav/MoveTo]
+## Flight Movement by Location [/drone/{droneId}/nav/move-to]
 Controlling drones can also be achieved by telling a drone a location to fly to rather than instructions relating to yaw, role etc
-    
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+
 ### Move Drone To [PUT]
 Returns all MRA Artists that match the specified criteria.
 
@@ -64,7 +74,6 @@ Returns all MRA Artists that match the specified criteria.
     + Headers
 
             api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
-            droneId: 1234
             
     + Attributes
 
@@ -72,7 +81,13 @@ Returns all MRA Artists that match the specified criteria.
 
 + Response 200 (text/plain)
 
-## Flight Commands [/Drone/{DroneId}/Nav/Action]
+## Flight Commands [/drone/{droneId}/nav/action]
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
 
 ### Command Drone [PUT]
 Perform a specific action
@@ -82,17 +97,22 @@ Perform a specific action
     + Headers
 
             api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
-            droneId: 1234
 
     + Attributes
     
-        + action: takeoff,land, hover, cutpower, return, startFollowing, stopFollowing (enum, required)
+        + action: takeoff, land, hover, cutpower, return, startFollowing, stopFollowing (enum, required)
 
 + Response 200 (text/plain)
 
 + Response 409 (text/plain)
 
-## Flight Tricks [/Drone/{DroneId}/Nav/Tricks]
+## Flight Tricks [/drone/{droneId}/nav/tricks]
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
 
 ### Command Drone [PUT]
 Some drones are capable of performing predefined tricks. This API allows us to perform those tricks
@@ -102,7 +122,6 @@ Some drones are capable of performing predefined tricks. This API allows us to p
     + Headers
 
             api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
-            droneId: 1234
         
     + Attributes
         
@@ -110,7 +129,17 @@ Some drones are capable of performing predefined tricks. This API allows us to p
             
 + Response 200 (text/plain)
 
-## Camera Commands [/Drone/{DroneId}/Camera/Action?cmd={land|takeoff|cut|home}]
+## Camera Commands [/drone/{droneId}/camera/action?{cmd}]
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
+    + cmd: cmd1, cmd2 (enum, optional)
+    
+        + Sample: cmd1
 
 ### Command Camera [PUT]
 Perform a specific action
@@ -120,12 +149,18 @@ Perform a specific action
     + Headers
 
             api-key: ac108161-d3a5-427d-b814-ff977728395b
-            droneId: 1234
 
 + Response 200 (text/plain)
 
-## Manage The Connection Of The Drone [/Drone/{DroneId}/Manage/Connection]
+## Manage The Connection Of The Drone [/drone/{droneId}/manage/connection]
 Operations to manage the Drone network connectivity
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
 
 ### Control Network For Drone [POST]
 Controls the network settings for the drone.
@@ -135,13 +170,19 @@ Controls the network settings for the drone.
     + Headers
 
             api-key: ac108161-d3a5-427d-b814-ff977728395b
-            droneId: 1234
 
 + Response 200 (text/plain)
 
-## Manage Nav Limits [/Drone/{DroneId}/Manage/Nav]
+## Manage Nav Limits [/drone/{droneId}/manage/nav]
 Operations related to managing a drone flight such as setting limits on the flight details
 
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
 ### Set Navigation Limits [PUT]
 Identify a drone to the API implementation so the Id can be used to reference the specific drone to command
 
@@ -150,7 +191,6 @@ Identify a drone to the API implementation so the Id can be used to reference th
     + Headers
 
             api-key: ac108161-d3a5-427d-b814-ff977728395b
-            droneId: 1234
     
     + Attributes
     
@@ -158,8 +198,14 @@ Identify a drone to the API implementation so the Id can be used to reference th
 
 + Response 200 (text/plain)
 
-## Define Location [/Drone/{DroneId}/Manage/Nav/Location]
+## Define Location [/drone/{droneId}/manage/nav/location]
 Defines different types of location
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
 
 ### Define Location [PUT]
 Identify a drone to the API implementation so the Id can be used to reference the specific drone to command
@@ -169,7 +215,7 @@ Identify a drone to the API implementation so the Id can be used to reference th
     + Headers
 
             api-key: ac108161-d3a5-427d-b814-ff977728395b
-            droneId: 1234
+
     
     + Attributes
     
