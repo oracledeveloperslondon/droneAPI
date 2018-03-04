@@ -12,9 +12,9 @@ That will enable the API implementation to be used for managing multiple drones.
 ## Register Drone [/drone/register]
 Tell the microservices about the drone, so we can correlate Id to the correct drone
 
-### Register [POST]
-when registring a drone you will get a drone id back. during initial development as we only want 1
-drone we can assume the drone Id will be 1
+### Register [GET]
+Triggers the process of locating drones. This then returns the drones and their identifiers
+http://developer.parrot.com/docs/SDK3/#discover-the-drones
 
 + Request (application/json)
 
@@ -22,15 +22,13 @@ drone we can assume the drone Id will be 1
 
             api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
         
-    + Attributes
-               
-        + droneName: MyDrone (string)  - Drone Id to be used in all the subsequent API calls
             
 + Response 200 (application/json)
         
     + Attributes    
-           
-        + droneId: 1 (number)  - Drone Id to be used in all the subsequent API calls
+            + (array)
+                + droneId: 1 (number)  - Drone Id to be used in all the subsequent API calls
+                + droneDescription: droneInfo (String) - details of the drone located
 
 ## Flight Movement [/drone/{droneId}/nav/move]
 Movement commands based telling the drone what angles of yaw, role and rotation etc to use.
