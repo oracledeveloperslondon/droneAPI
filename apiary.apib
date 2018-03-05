@@ -1,0 +1,280 @@
+FORMAT: 1A
+HOST: https://dronedevmeetup.docs.apiary.io/
+
+# Drone
+Defines a set of APIs that can be used to command a Drone. Whilst not bound specifically to the Parrot Drone SDK
+its use is initially targeted to support the Parrot Drone SDK and Bebop II specifically.
+The SDK URL is http://developer.parrot.com/docs/reference/bebop_2/index.html#scan-wifi-network97.
+
+All the APIs will use an API-Key to secure the interaction. Each drone will have an identifier passed as a header.
+That will enable the API implementation to be used for managing multiple drones.
+
+## Register Drone [/drone/register]
+Tell the microservices about the drone, so we can correlate Id to the correct drone
+
+### Register [GET]
+Triggers the process of locating drones. This then returns the drones and their identifiers
+http://developer.parrot.com/docs/SDK3/#discover-the-drones
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
+        
+            
++ Response 200 (application/json)
+        
+    + Attributes    
+            + (array)
+                + droneId: 1 (number)  - Drone Id to be used in all the subsequent API calls
+                + droneDescription: droneInfo (String) - details of the drone located
+
+## Flight Movement [/drone/{droneId}/nav/move]
+Movement commands based telling the drone what angles of yaw, role and rotation etc to use.
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+    
+### Move Drone [PUT]
+Returns all MRA Artists that match the specified criteria.
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
+            droneId: 1234
+
+    + Attributes
+        
+        + movement (Move)
+
++ Response 200 (text/plain)
+
+## Flight Movement by Location [/drone/{droneId}/nav/move-to]
+Controlling drones can also be achieved by telling a drone a location to fly to rather than instructions relating to yaw, role etc
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+
+### Move Drone To [PUT]
+Returns all MRA Artists that match the specified criteria.
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
+            
+    + Attributes
+
+        + goTo (Location)
+
++ Response 200 (text/plain)
+
+## Flight Commands [/drone/{droneId}/nav/action]
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+
+### Command Drone [PUT]
+Perform a specific action
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
+
+    + Attributes
+    
+        + action: takeoff, land, hover, cutpower, return, startFollowing, stopFollowing (enum, required)
+
++ Response 200 (text/plain)
+
++ Response 409 (text/plain)
+
+## Flight Tricks [/drone/{droneId}/nav/tricks]
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+
+### Command Drone [PUT]
+Some drones are capable of performing predefined tricks. This API allows us to perform those tricks
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
+        
+    + Attributes
+        
+        + execute (Trick)
+            
++ Response 200 (text/plain)
+
+## Camera Commands [/drone/{droneId}/camera/action?{cmd}]
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
+    + cmd: cmd1, cmd2 (enum, optional)
+    
+        + Sample: cmd1
+
+### Command Camera [PUT]
+Perform a specific action
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b
+
++ Response 200 (text/plain)
+
+## Manage The Connection Of The Drone [/drone/{droneId}/manage/connection]
+Operations to manage the Drone network connectivity
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
+
+### Control Network For Drone [POST]
+Controls the network settings for the drone.
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b
+
++ Response 200 (text/plain)
+
+## Manage Nav Limits [/drone/{droneId}/manage/nav]
+Operations related to managing a drone flight such as setting limits on the flight details
+
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
+### Set Navigation Limits [PUT]
+Identify a drone to the API implementation so the Id can be used to reference the specific drone to command
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b
+    
+    + Attributes
+    
+        + limits (MoveLimits)
+
++ Response 200 (text/plain)
+
+## Define Location [/drone/{droneId}/manage/nav/location]
+Defines different types of location
+
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+
+### Define Location [PUT]
+Identify a drone to the API implementation so the Id can be used to reference the specific drone to command
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b
+
+    
+    + Attributes
+    
+        + location (Location, required)
+        
+        + locationType: home, pilot (enum, required)
+
++ Response 200 (text/plain)
+
+# Data Structures
+
+## Move (object)
+- yaw: 0.0 (number, required)
+
+    Ranges from -100 to +100 and controls the drone rotation on its central axis. Negative values cause rotation anti clockwise and 
+    positive causes rotation in clockwise manner
+
+- roll: 0.0 (number, required) 
+
+    ranges from -100 to +100 with negative values representing movement to the left and positive for movement to the right
+    
+- pitch: 0.0 (number, required)
+
+    ranges from -100 to +100 with a negative value causing the drone front to rise skyward cause the drone to move backwards
+    and the positive range making the front move downward to the ground and drone will move forwards
+    
+- gaz: 0.0 (number, required)
+
+    ranges from -100 to + 100 and defines the rate of vertical movement. with a positive figure causing an increase in 
+    height and negative value causing decent
+
+## MoveLimits (object)
+- maxYaw: 50 (number, optional) - maximum rate of yaw, rotation about drone centre
+- maxRoll: 50 (number, optional) - maximum rate of roll, left to right
+- maxPitch: 50 (number, optional) - maximum level of pitch, front to back
+- maxAltitude: 5 (number, optional) - maximum height allowed
+- maxDistance: 5 (number, optional) - maximum distance can be set from initial location
+- maxGaz: 2 (number, optional) - maximum verticial acceleration
+
+##EnvironmentSettings (object)
+- environment: indoors (enum, required)
+
+## HomeLocation (object)
+- lat: 1.1234 (number, required)
+- long: 1.234 (number, required)
+- altitude: 0.5 (number, optional) alteritude in metres
+
+## Location (object)
+- lat: 1.1234 (number, required)
+- long: 1.234 (number, required)
+- altitude: 1.234 (number, required)
+- heading: 1.2345 (number, optional)
+- orientation: none, location, previous, during (enum, optional)
+
+## LocationOffset (object)
+- distance: 1.0 (number, required) - The distance leader-follower in meters
+- elevation: 0.5 (number, required) - The elevation leader-follower in meters 
+- azimuth: 0.0 (number, required) - The azimuth north-leader-follower in rad (not used when arg start is at 0)
+
+## Action (object)
+- action: takeoff,land, hover, cutpower, return, startFollowing, stopFollowing (enum, required)
+
+## Trick (object)
+- manuever: flip, horizontalReveal, verticalReveal, spiral, parabole, candle, dolly, (enum, required)
