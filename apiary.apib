@@ -35,24 +35,25 @@ http://developer.parrot.com/docs/SDK3/#discover-the-drones
                 + droneDescription: droneInfo (String) - details of the drone located
                 
                 
-## Simple Yaw Movement [/drone/{droneId}/simplenav/{yawValue}/yaw]
-Movement provided by the URI as a simple operation one one axis can be controlled yaw.
+## Simple Yaw Movement [/drone/{droneId}/simplenav/rotation/{rotationValue}]
+Movement provided by the URI as a simple operation one one axis can be controlled rotation.
 
 ### Change Yaw [PUT]
-will make the drone change its yaw value
+will make the drone change its rotation value in the range of -100 to 100
 
 + Request (application/json)
 
     + Headers
 
             api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
+            
 + Parameters
 
     + droneId (number, required)
 
         + Sample: 1
         
-    + yawValue (number, required)
+    + rotationValue (number, required)
     
         + Sample: 10
 
@@ -61,11 +62,11 @@ will make the drone change its yaw value
 + Response 409 (text/plain)
 
 
-## Simple Roll Movement [/drone/{droneId}/simplenav/{rollValue}/roll]
-Movement provided by the URI as a simple operation one one axis can be controlled roll.
+## Simple Roll Movement [/drone/{droneId}/simplenav/roll/{rollValue}]
+Movement provided by the URI as a simple operation one one axis can be controlled roll (left to right)  in the range of -100 to 100
 
 ### Change Roll [PUT]
-will make the drone change its roll value
+will make the drone change its roll value  in the range of -100 to 100
 
 + Request (application/json)
 
@@ -87,10 +88,10 @@ will make the drone change its roll value
 + Response 409 (text/plain)
 
 
-## Simple Pitch Movement [/drone/{droneId}/simplenav/{pitchValue}/pitch]
-Movement provided by the URI as a simple operation one one axis can be controlled yaw.
+## Simple Pitch Movement [/drone/{droneId}/simplenav/pitch/{pitchValue}]
+Movement provided by the URI as a simple operation to control pitch (forward and backward)
 
-### Change pitch [PUT]
+### Change Pitch [PUT]
 will make the drone change its pitch value. Legal values range from -100 to 100
 
 + Request (application/json)
@@ -112,8 +113,8 @@ will make the drone change its pitch value. Legal values range from -100 to 100
 
 + Response 409 (text/plain)
 
-## Simple Altitude Movement [/drone/{droneId}/simplenav/{altitudeValue}/altitude]
-Movement provided by the URI as a simple operation one one axis can be controlled altitude.
+## Simple Altitude Movement [/drone/{droneId}/simplenav/altitude/{altitudeValue}]
+Movement provided by the URI as a simple operation one one axis can be controlled altitude. Altitutde is technically identified as gaz
 
 ### Change Altitude [PUT]
 will make the drone change its yaw value
