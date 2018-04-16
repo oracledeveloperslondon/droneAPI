@@ -9,6 +9,10 @@ The SDK URL is http://developer.parrot.com/docs/reference/bebop_2/index.html#sca
 All the APIs will use an API-Key to secure the interaction. Each drone will have an identifier passed as a header.
 That will enable the API implementation to be used for managing multiple drones.
 
+As it is possible for an API call to be received whilst handling an existing API call qwhen a conflict has occured HTTP response code of 409 will be provided.
+
+The APIs will be implemented progressively - for APIs not yet implemented an HTTP response of 501 will be returned 
+
 ## Register Drone [/drone/register]
 Tell the microservices about the drone, so we can correlate Id to the correct drone
 
@@ -54,6 +58,8 @@ will make the drone change its yaw value
 
 + Response 200 (application/json)
 
++ Response 409 (text/plain)
+
 
 ## Simple Roll Movement [/drone/{droneId}/simplenav/{rollValue}/roll]
 Movement provided by the URI as a simple operation one one axis can be controlled roll.
@@ -78,6 +84,9 @@ will make the drone change its roll value
 
 + Response 200 (application/json)
 
++ Response 409 (text/plain)
+
+
 ## Simple Pitch Movement [/drone/{droneId}/simplenav/{pitchValue}/pitch]
 Movement provided by the URI as a simple operation one one axis can be controlled yaw.
 
@@ -101,6 +110,7 @@ will make the drone change its pitch value. Legal values range from -100 to 100
 
 + Response 200 (application/json)
 
++ Response 409 (text/plain)
 
 ## Simple Altitude Movement [/drone/{droneId}/simplenav/{altitudeValue}/altitude]
 Movement provided by the URI as a simple operation one one axis can be controlled altitude.
@@ -125,6 +135,9 @@ will make the drone change its yaw value
 
 + Response 200 (application/json)
 
++ Response 409 (text/plain)
+
+
 ## Combined Movement [/drone/{droneId}/move]
 
 ### Move Drone [PUT]
@@ -142,6 +155,9 @@ Returns all MRA Artists that match the specified criteria.
         + movement (Move)
 
 + Response 200 (text/plain)                
+
++ Response 409 (text/plain)
+
 
 ## Flight Movement [/drone/{droneId}/nav/move]
 Movement commands based telling the drone what angles of yaw, role and rotation etc to use.
@@ -170,7 +186,8 @@ Returns all MRA Artists that match the specified criteria.
 
 + Response 409 (text/plain)
 
-+ Response 501 (text/plain)
++ Response 501 (text/plain) 
+
 
 ## Flight Movement by Location [/drone/{droneId}/nav/move-to]
 Controlling drones can also be achieved by telling a drone a location to fly to rather than instructions relating to yaw, role etc
@@ -195,6 +212,10 @@ Returns all MRA Artists that match the specified criteria.
         + goTo (Location)
 
 + Response 200 (text/plain)
+
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
 
 ## Flight Commands [/drone/{droneId}/nav/action]
 
@@ -221,6 +242,8 @@ Perform a specific action
 
 + Response 409 (text/plain)
 
++ Response 501 (text/plain)
+
 ## Flight Tricks [/drone/{droneId}/nav/tricks]
 
 + Parameters
@@ -243,6 +266,10 @@ Some drones are capable of performing predefined tricks. This API allows us to p
         + execute (Trick)
             
 + Response 200 (text/plain)
+
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
 
 ## Camera Commands [/drone/{droneId}/camera/action?{cmd}]
 
@@ -267,6 +294,10 @@ Perform a specific action
 
 + Response 200 (text/plain)
 
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
+
 ## Manage The Connection Of The Drone [/drone/{droneId}/manage/connection]
 Operations to manage the Drone network connectivity
 
@@ -287,6 +318,10 @@ Controls the network settings for the drone.
             api-key: ac108161-d3a5-427d-b814-ff977728395b
 
 + Response 200 (text/plain)
+
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
 
 ## Manage Nav Limits [/drone/{droneId}/manage/nav]
 Operations related to managing a drone flight such as setting limits on the flight details
@@ -312,6 +347,10 @@ Identify a drone to the API implementation so the Id can be used to reference th
         + limits (MoveLimits)
 
 + Response 200 (text/plain)
+
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
 
 ## Define Location [/drone/{droneId}/manage/nav/location]
 Defines different types of location
@@ -339,6 +378,10 @@ Identify a drone to the API implementation so the Id can be used to reference th
         + locationType: home, pilot (enum, required)
 
 + Response 200 (text/plain)
+
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
 
 # Data Structures
 
