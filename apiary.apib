@@ -29,6 +29,119 @@ http://developer.parrot.com/docs/SDK3/#discover-the-drones
             + (array)
                 + droneId: 1 (number)  - Drone Id to be used in all the subsequent API calls
                 + droneDescription: droneInfo (String) - details of the drone located
+                
+                
+## Simple Yaw Movement [/drone/{droneId}/simplenav/{yawValue}/yaw]
+Movement provided by the URI as a simple operation one one axis can be controlled yaw.
+
+### Change Yaw [PUT]
+will make the drone change its yaw value
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
+    + yawValue (number, required)
+    
+        + Sample: 10
+
++ Response 200 (application/json)
+
+
+## Simple Roll Movement [/drone/{droneId}/simplenav/{rollValue}/roll]
+Movement provided by the URI as a simple operation one one axis can be controlled roll.
+
+### Change Roll [PUT]
+will make the drone change its roll value
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
+    + rollValue (number, required)
+    
+        + Sample: 10
+
++ Response 200 (application/json)
+
+## Simple Pitch Movement [/drone/{droneId}/simplenav/{pitchValue}/pitch]
+Movement provided by the URI as a simple operation one one axis can be controlled yaw.
+
+### Change pitch [PUT]
+will make the drone change its pitch value. Legal values range from -100 to 100
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
+    + pitchValue (number, required)
+    
+        + Sample: 10
+
++ Response 200 (application/json)
+
+
+## Simple Altitude Movement [/drone/{droneId}/simplenav/{altitudeValue}/altitude]
+Movement provided by the URI as a simple operation one one axis can be controlled altitude.
+
+### Change Altitude [PUT]
+will make the drone change its yaw value
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
++ Parameters
+
+    + droneId (number, required)
+
+        + Sample: 1
+        
+    + altitudeValue (number, required)
+    
+        + Sample: 10
+
++ Response 200 (application/json)
+
+## Combined Movement [/drone/{droneId}/move]
+
+### Move Drone [PUT]
+Returns all MRA Artists that match the specified criteria.
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
+            droneId: 1234
+
+    + Attributes
+        
+        + movement (Move)
+
++ Response 200 (text/plain)                
 
 ## Flight Movement [/drone/{droneId}/nav/move]
 Movement commands based telling the drone what angles of yaw, role and rotation etc to use.
