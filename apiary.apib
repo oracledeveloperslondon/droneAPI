@@ -30,10 +30,11 @@ http://developer.parrot.com/docs/SDK3/#discover-the-drones
 + Response 200 (application/json)
         
     + Attributes    
-            + (array)
-                + droneId: 1 (number)  - Drone Id to be used in all the subsequent API calls
-                + droneDescription: droneInfo (String) - details of the drone located
+            + drones (array)
+                + droneId: "1" (string)  - Drone Id to be used in all the subsequent API calls
+                + droneDescription: droneInfo (string) - details of the drone located
                 
++ Response 500
                 
 ## Simple Yaw Movement [/drone/{droneId}/simplenav/rotation/{rotationValue}]
 Movement provided by the URI as a simple operation one one axis can be controlled rotation.
@@ -49,7 +50,7 @@ will make the drone change its rotation value in the range of -100 to 100
             
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -75,7 +76,7 @@ will make the drone change its roll value  in the range of -100 to 100
             api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -101,7 +102,7 @@ will make the drone change its pitch value. Legal values range from -100 to 100
             api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -126,7 +127,7 @@ will make the drone change its yaw value
             api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -165,7 +166,7 @@ Movement commands based telling the drone what angles of yaw, role and rotation 
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
     
@@ -195,7 +196,7 @@ Controlling drones can also be achieved by telling a drone a location to fly to 
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
 
@@ -218,13 +219,17 @@ Returns all MRA Artists that match the specified criteria.
 
 + Response 501 (text/plain)
 
-## Flight Commands [/drone/{droneId}/nav/action]
+## Flight Commands [/drone/{droneId}/nav/action/{action}]
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
+        
+    + action (enum, required)
+    
+        + Sample: takeoff, land, hover, cutpower, return, startFollowing, stopFollowing)
 
 ### Command Drone [PUT]
 Perform a specific action
@@ -234,10 +239,6 @@ Perform a specific action
     + Headers
 
             api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
-
-    + Attributes
-    
-        + action: takeoff, land, hover, cutpower, return, startFollowing, stopFollowing (enum, required)
 
 + Response 200 (text/plain)
 
@@ -249,7 +250,7 @@ Perform a specific action
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
 
@@ -276,7 +277,7 @@ Some drones are capable of performing predefined tricks. This API allows us to p
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -304,7 +305,7 @@ Operations to manage the Drone network connectivity
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -330,7 +331,7 @@ Operations related to managing a drone flight such as setting limits on the flig
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -358,7 +359,7 @@ Defines different types of location
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
 
