@@ -9,6 +9,10 @@ The SDK URL is http://developer.parrot.com/docs/reference/bebop_2/index.html#sca
 All the APIs will use an API-Key to secure the interaction. Each drone will have an identifier passed as a header.
 That will enable the API implementation to be used for managing multiple drones.
 
+As it is possible for an API call to be received whilst handling an existing API call qwhen a conflict has occured HTTP response code of 409 will be provided.
+
+The APIs will be implemented progressively - for APIs not yet implemented an HTTP response of 501 will be returned 
+
 ## Register Drone [/drone/register]
 Tell the microservices about the drone, so we can correlate Id to the correct drone
 
@@ -26,16 +30,143 @@ http://developer.parrot.com/docs/SDK3/#discover-the-drones
 + Response 200 (application/json)
         
     + Attributes    
-            + (array)
-                + droneId: 1 (number)  - Drone Id to be used in all the subsequent API calls
-                + droneDescription: droneInfo (String) - details of the drone located
+            + drones (array)
+                + droneId: "1" (string)  - Drone Id to be used in all the subsequent API calls
+                + droneDescription: droneInfo (string) - details of the drone located
+                
++ Response 500
+                
+## Simple Yaw Movement [/drone/{droneId}/simplenav/rotation/{rotationValue}]
+Movement provided by the URI as a simple operation one one axis can be controlled rotation.
+
+### Change Yaw [PUT]
+will make the drone change its rotation value in the range of -100 to 100
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
+            
++ Parameters
+
+    + droneId (string, required)
+
+        + Sample: 1
+        
+    + rotationValue (number, required)
+    
+        + Sample: 10
+
++ Response 200 (application/json)
+
++ Response 409 (text/plain)
+
+
+## Simple Roll Movement [/drone/{droneId}/simplenav/roll/{rollValue}]
+Movement provided by the URI as a simple operation one one axis can be controlled roll (left to right)  in the range of -100 to 100
+
+### Change Roll [PUT]
+will make the drone change its roll value  in the range of -100 to 100
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
++ Parameters
+
+    + droneId (string, required)
+
+        + Sample: 1
+        
+    + rollValue (number, required)
+    
+        + Sample: 10
+
++ Response 200 (application/json)
+
++ Response 409 (text/plain)
+
+
+## Simple Pitch Movement [/drone/{droneId}/simplenav/pitch/{pitchValue}]
+Movement provided by the URI as a simple operation to control pitch (forward and backward)
+
+### Change Pitch [PUT]
+will make the drone change its pitch value. Legal values range from -100 to 100
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
++ Parameters
+
+    + droneId (string, required)
+
+        + Sample: 1
+        
+    + pitchValue (number, required)
+    
+        + Sample: 10
+
++ Response 200 (application/json)
+
++ Response 409 (text/plain)
+
+## Simple Altitude Movement [/drone/{droneId}/simplenav/altitude/{altitudeValue}]
+Movement provided by the URI as a simple operation one one axis can be controlled altitude. Altitutde is technically identified as gaz
+
+### Change Altitude [PUT]
+will make the drone change its yaw value
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: YTkxZTRhNzAtODdlNy00ZjMzLTg0MWItOTc0NmZmNjU4Yzk4
++ Parameters
+
+    + droneId (string, required)
+
+        + Sample: 1
+        
+    + altitudeValue (number, required)
+    
+        + Sample: 10
+
++ Response 200 (application/json)
+
++ Response 409 (text/plain)
+
+
+## Combined Movement [/drone/{droneId}/move]
+
+### Move Drone [PUT]
+Returns all MRA Artists that match the specified criteria.
+
++ Request (application/json)
+
+    + Headers
+
+            api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
+            droneId: 1234
+
+    + Attributes
+        
+        + movement (Move)
+
++ Response 200 (text/plain)                
+
++ Response 409 (text/plain)
+
 
 ## Flight Movement [/drone/{droneId}/nav/move]
 Movement commands based telling the drone what angles of yaw, role and rotation etc to use.
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
     
@@ -55,12 +186,17 @@ Returns all MRA Artists that match the specified criteria.
 
 + Response 200 (text/plain)
 
++ Response 409 (text/plain)
+
++ Response 501 (text/plain) 
+
+
 ## Flight Movement by Location [/drone/{droneId}/nav/move-to]
 Controlling drones can also be achieved by telling a drone a location to fly to rather than instructions relating to yaw, role etc
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
 
@@ -79,13 +215,24 @@ Returns all MRA Artists that match the specified criteria.
 
 + Response 200 (text/plain)
 
-## Flight Commands [/drone/{droneId}/nav/action]
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
+
+## Flight Commands [/drone/{droneId}/nav/action/{action}]
+Provides the means to issue simple commands such as takeoff or land etc If the command is accepted then a 200 response is provided. 
+If the request was understood, but could not be actioned because the drone was in the wrong state e.g. Land when the drone is Inactive or already Landed then 403 is provided
+If the request hasnt been implemented yet then 501 is returned. For requests that arent understood 400 is returned
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
+        
+    + action (enum, required)
+    
+        + Sample: takeoff, land, hover, cutpower, return, startFollowing, stopFollowing
 
 ### Command Drone [PUT]
 Perform a specific action
@@ -96,19 +243,19 @@ Perform a specific action
 
             api-key: ac108161-d3a5-427d-b814-ff977728395b (String)
 
-    + Attributes
-    
-        + action: takeoff, land, hover, cutpower, return, startFollowing, stopFollowing (enum, required)
-
 + Response 200 (text/plain)
 
-+ Response 409 (text/plain)
++ Response 400 (text/plain)
+
++ Response 403 (text/plain)
+
++ Response 501 (text/plain)
 
 ## Flight Tricks [/drone/{droneId}/nav/tricks]
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
 
@@ -127,11 +274,15 @@ Some drones are capable of performing predefined tricks. This API allows us to p
             
 + Response 200 (text/plain)
 
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
+
 ## Camera Commands [/drone/{droneId}/camera/action?{cmd}]
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -150,12 +301,16 @@ Perform a specific action
 
 + Response 200 (text/plain)
 
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
+
 ## Manage The Connection Of The Drone [/drone/{droneId}/manage/connection]
 Operations to manage the Drone network connectivity
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -171,13 +326,17 @@ Controls the network settings for the drone.
 
 + Response 200 (text/plain)
 
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
+
 ## Manage Nav Limits [/drone/{droneId}/manage/nav]
 Operations related to managing a drone flight such as setting limits on the flight details
 
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
         
@@ -196,12 +355,16 @@ Identify a drone to the API implementation so the Id can be used to reference th
 
 + Response 200 (text/plain)
 
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
+
 ## Define Location [/drone/{droneId}/manage/nav/location]
 Defines different types of location
 
 + Parameters
 
-    + droneId (number, required)
+    + droneId (string, required)
 
         + Sample: 1
 
@@ -222,6 +385,10 @@ Identify a drone to the API implementation so the Id can be used to reference th
         + locationType: home, pilot (enum, required)
 
 + Response 200 (text/plain)
+
++ Response 409 (text/plain)
+
++ Response 501 (text/plain)
 
 # Data Structures
 
