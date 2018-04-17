@@ -1,0 +1,42 @@
+<html lang="en-us">
+  <head>
+    <title>Drone Watcher</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1">
+    <link rel="icon" href="css/images/favicon.ico" type="image/x-icon" />
+
+    <!-- This is the main css file for the default Alta theme -->
+    <!-- injector:theme -->
+    <link rel="stylesheet" href="css/libs/oj/v4.2.0/alta/oj-alta-min.css" type="text/css"/>
+    <!-- endinjector -->
+    <!-- This contains icon fonts used by the starter template -->
+    <link rel="stylesheet" href="css/demo-alta-site-min.css" type="text/css"/>
+
+    <!-- This is where you would add any app specific styling -->
+    <link rel="stylesheet" href="css/app.css" type="text/css"/>
+
+  </head>
+  <body class="oj-web-applayout-body">
+    <div id="globalBody" class="oj-web-applayout-page">
+      <header role="banner" class="oj-web-applayout-header">
+        <div class="oj-web-applayout-max-width oj-flex-bar oj-sm-align-items-center">
+          <div class="oj-flex-bar-middle oj-sm-align-items-baseline">
+            <h1 class="oj-sm-only-hide oj-web-applayout-header-title" title="Application Name" data-bind="text: appName"></h1>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="oj-web-applayout-max-width oj-web-applayout-content">
+        <div class="oj-flex oj-sm-flex-direction-column">
+          <div class="oj-flex-item oj-panel oj-sm-margin-2x oj-sm-flex-direction-column" data-bind="ojModule: messagesPage" style="max-height: 45%"></div>
+          <div class="oj-flex-item oj-panel oj-sm-margin-2x" data-bind="ojModule: animationPage" style="max-height: 40%"></div>
+        </div>
+      </div>
+    </div>
+    
+    <script type="text/javascript" src="js/libs/require/require.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+
+  </body>
+
+</html>

@@ -1,0 +1,17 @@
+jetApp/node_modules
+jetApp/bower_components
+jetApp/web
+jetApp/themes
+
+jetApp/hybrid/node_modules
+jetApp/hybrid/platforms
+jetApp/hybrid/www/*
+
+!hybrid/plugins
+hybrid/plugins/*
+!hybrid/plugins/fetch.json
+
+jetApp/.DS_Store
+jetApp/Thumbs.db
+
+api/node_modules/*

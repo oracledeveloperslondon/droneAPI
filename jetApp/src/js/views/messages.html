@@ -1,0 +1,29 @@
+<h2>Messages</h2>
+
+<oj-button data-bind="click: emitMessage">Send Message</oj-button>
+<br>
+<oj-form-layout id="customerDetailsLayout"
+  label-edge="start"
+  max-columns="2">
+  <oj-input-text value="{{yawAmount}}" label-hint="Yaw"></oj-input-text>
+  <oj-input-text value="{{pitchAmount}}" label-hint="Pitch"></oj-input-text>
+  <oj-input-text value="{{rollAmount}}" label-hint="Roll"></oj-input-text>
+  <oj-input-text value="{{gazAmount}}" label-hint="Gaz"></oj-input-text>
+</oj-form-layout>
+
+<div class="oj-sm-flex-direction-column" style="max-height: 20%; overflow-y: auto">
+
+  <oj-bind-for-each data="[[messageArray]]" as="message">
+    <template>
+      <div class="oj-flex-item oj-sm-flex-direction-column oj-sm-margin-2x">
+        <p data-bind="text: message.data.text"></p>
+        ID: <span data-bind="text: message.data.id"></span>
+        Yaw: <span data-bind="text: message.data.yaw"></span>
+        Pitch: <span data-bind="text: message.data.pitch"></span>
+        Roll: <span data-bind="text: message.data.roll"></span>
+        Gaz: <span data-bind="text: message.data.gaz"></span>
+      </div>
+    </template>
+  </oj-bind-for-each>
+
+</div>
