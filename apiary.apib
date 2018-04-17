@@ -220,6 +220,9 @@ Returns all MRA Artists that match the specified criteria.
 + Response 501 (text/plain)
 
 ## Flight Commands [/drone/{droneId}/nav/action/{action}]
+Provides the means to issue simple commands such as takeoff or land etc If the command is accepted then a 200 response is provided. 
+If the request was understood, but could not be actioned because the drone was in the wrong state e.g. Land when the drone is Inactive or already Landed then 403 is provided
+If the request hasnt been implemented yet then 501 is returned. For requests that arent understood 400 is returned
 
 + Parameters
 
@@ -229,7 +232,7 @@ Returns all MRA Artists that match the specified criteria.
         
     + action (enum, required)
     
-        + Sample: takeoff, land, hover, cutpower, return, startFollowing, stopFollowing)
+        + Sample: takeoff, land, hover, cutpower, return, startFollowing, stopFollowing
 
 ### Command Drone [PUT]
 Perform a specific action
@@ -242,7 +245,9 @@ Perform a specific action
 
 + Response 200 (text/plain)
 
-+ Response 409 (text/plain)
++ Reposnse 400 (text/plain)
+
++ Response 403 (text/plain)
 
 + Response 501 (text/plain)
 
