@@ -24,13 +24,24 @@ In addition to driving a real drone. It is possible to also coperate the backend
 #Getting Started
 
 To get started and use this framework you need to:
-  1. Install Go
-  2. Retrive Gorilla/Mux
+  1. Install Go - instructions [here](https://golang.org/doc/install)
+  2. Retrive Gorilla/Mux - instructions [here](http://www.gorillatoolkit.org)
   3. Download this library
-  4. Complie everything
-  5. Start up the server
+  4. Complie everything using the [Go build command](https://golang.org/pkg/go/build/)
+  5. Start up the server - this is down the filesystem naming, but the preceeding steps should give a binsry execuable
 
 # How the Code Hangs Together
 Whilst we have worked hard to ensure the code is self documenting the following provides details on which files do what so you can start to traverse the code, or add to it without compromising the abstratcions and code structure ...
 
-TBD
+## Packages
+there are two packages, **main** which contains the REST handling layer and **dronecore** which provides the wrapping layer.
+
+### main
+   - **webhandler.go** this includes the declarations for the Gorrilla Multiplexer (MUX) providing the declarations for the handlers. THE URIs defined are presented in a manner that makes it as close as posxible to the Blueprint representstion. additionally the URIs are declared with both a trailing **/** as it impacts the MUX ability to handle the call. We have also included alias paths for example __yaw__ and __rotation__
+   - **actionhandler.go** The handler functions have been grouped together in the main tier. The handlers role is to take the REST calls and translate the web call to the relevant calls in the **dronecore** layer
+   
+## dronecore
+  - **droneobj.go** This provides the means to wrap the __gobot__ library and procides the primary struc which holds, a number of keyelements relating to a drone, this includes the __driver__ and __connection__ object, plus a handle to a __reporter__ object which provides the means to record whatthe drone is being asked to perform
+  - **droneservices.go** This provides the handler for non droneinstance specific logic, such as translating a URI to get the name of the droneand locating the cached drone object.
+
+### dronecore
