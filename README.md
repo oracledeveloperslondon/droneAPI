@@ -38,10 +38,15 @@ there are two packages, **main** which contains the REST handling layer and **dr
 
 ### main
    - **webhandler.go** this includes the declarations for the Gorrilla Multiplexer (MUX) providing the declarations for the handlers. THE URIs defined are presented in a manner that makes it as close as posxible to the Blueprint representstion. additionally the URIs are declared with both a trailing **/** as it impacts the MUX ability to handle the call. We have also included alias paths for example __yaw__ and __rotation__
-   - **actionhandler.go** The handler functions have been grouped together in the main tier. The handlers role is to take the REST calls and translate the web call to the relevant calls in the **dronecore** layer
+   - **performActions.go** The handler functions have been grouped together in the main tier. All the handler files incorporate the task of taking the REST calls and translate the web call to the relevant calls in the **dronecore** layer. __performactions__ takes the actions like tajkeoff, land etc. The ohers are __performEmergency__ which takes an Emergency Stop which then goes through all the known drones and lands and stops them regardless of what is happening.  __PwerformRegistrations__ takes the regiastration call and locates drone(s) or creates dummy ones and registers them  __performSiompleNavigations__ contains the change yaw, gaz etc
+   - **dronelogging** makes use of the basic logging framework to handle simple Log4J style logging and exposes 4 objects Trace, Info, Warning, Fatal -- these entitiers have no linkage to the __DroneDash__ feature
    
 ## dronecore
   - **droneobj.go** This provides the means to wrap the __gobot__ library and procides the primary struc which holds, a number of keyelements relating to a drone, this includes the __driver__ and __connection__ object, plus a handle to a __reporter__ object which provides the means to record whatthe drone is being asked to perform
-  - **droneservices.go** This provides the handler for non droneinstance specific logic, such as translating a URI to get the name of the droneand locating the cached drone object.
+  - **drone-services.go** This provides the handler for non droneinstance specific logic, such as translating a URI to get the name of the droneand locating the cached drone object.
+  - **droneReport.go**
+  - **droneactions.go**
 
-### dronecore
+#API LifeCycle
+
+To control the drone it first has to be registered through the RegisterDrone API call - then any command can be sentm, but IF the drone is in the wrong state a **BadRequest** response will be provided.  APIs not yet implementined will return **NotImplemented**
