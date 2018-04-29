@@ -21,7 +21,7 @@ The Web server / URI handling has been implemented using Gorrilla Mux.
 ## A Simulation Mode
 In addition to driving a real drone. It is possible to also coperate the backend with a simulation display.  Each of the action calls are forwarded onto a JET Application called drone-dash which will display messages of what the drone is being asked to do, and provide a visual representation.  Drooe-dash is avaialable [here](https://github.com/oracledeveloperslondon/dronedash).
 
-#Getting Started
+# Getting Started
 
 To get started and use this framework you need to:
   1. Install Go - instructions [here](https://golang.org/doc/install)
