@@ -47,6 +47,6 @@ there are two packages, **main** which contains the REST handling layer and **dr
   - **droneReport.go**
   - **droneactions.go**
 
-#API LifeCycle
+# API LifeCycle
 
 To control the drone it first has to be registered through the RegisterDrone API call - then any command can be sentm, but IF the drone is in the wrong state a **BadRequest** response will be provided.  APIs not yet implementined will return **NotImplemented**
