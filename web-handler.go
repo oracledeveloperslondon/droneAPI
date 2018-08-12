@@ -8,20 +8,57 @@ import (
 	"strings"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/websocket"
 )
 
 const (
-	SVR_ADDR = "localhost:80"
+	SVR_ADDR = "localhost:8080"
 	ENCODING = "Content-Encoding"
 	TEXTENC  = "text/plain"
 )
 
+type message struct {
+    Movement movementData `json:"movement"`
+}
+
+type movementData struct {
+    Yaw string `json:"yaw"`
+    Roll string `json:"roll"`
+	Pitch string `json:"pitch"`
+}
+
 var drones *dronecore.DroneService
+var conn *websocket.Conn
 
 //var srv *http.Server
 
 func init() {
 	drones = dronecore.InitialiseDroneService()
+}
+
+func wsHandler(w http.ResponseWriter, r *http.Request) {
+	newConn, err := websocket.Upgrade(w, r, w.Header(), 1024, 1024)
+	if err != nil {
+		http.Error(w, "Could not open websocket connection", http.StatusBadRequest)
+	}
+	conn = newConn
+	
+}
+
+func sendMessage(yaw string, roll string, pitch string) {
+
+	m := message{movementData{Yaw: yaw, Roll: roll, Pitch: pitch}}
+	
+	if conn != nil {
+		
+		if err := conn.WriteJSON(m); err != nil {
+			Trace.Println(err)
+		}
+		
+	} else {
+		Info.Println("No websocket connection")
+	}
+	
 }
 
 func catchAllHandler(w http.ResponseWriter, r *http.Request) {
@@ -97,17 +134,22 @@ func main() {
 	r.HandleFunc("/drone/{droneId}/simplenav/rotation/{yaw}/", droneSimpleNavYawHandler)
 	r.HandleFunc("/drone/{droneId}/simplenav/yaw/{yaw}", droneSimpleNavYawHandler)
 	r.HandleFunc("/drone/{droneId}/simplenav/yaw/{yaw}/", droneSimpleNavYawHandler)
+	
+	r.HandleFunc("/ws", wsHandler)
 
 	r.HandleFunc("/", catchAllHandler)
 	r.HandleFunc("/drone/", catchAllHandler)
 
 	Trace.Println("Multiplexer configured. starting server....")
-
+	
+	
 	if IsLogging("Trace") {
 		walkMux(r)
 	}
-
+	
 	log.Fatal(http.ListenAndServe(SVR_ADDR, r))
+	
+	
 
 	Trace.Println("The End")
 }
