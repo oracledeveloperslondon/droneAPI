@@ -37,7 +37,7 @@ func droneRegistrationHandler(response http.ResponseWriter, request *http.Reques
 		Trace.Println("setting limits and response object")
 
 		//// TODO: replace these hardcoded values
-		newDrone.SetLimits(2, 2, 2, 2)
+		newDrone.SetLimits(360, 360, 360, 2)
 		drones.RegisterDrone(newDrone.GetName(), newDrone)
 
 		//// TODO: at a future point we need to handle multiple drones here

@@ -26,7 +26,8 @@ In addition to driving a real drone. It is possible to also coperate the backend
 To get started and use this framework you need to:
   1. Install Go - instructions [here](https://golang.org/doc/install)
   2. Retrive Gorilla/Mux - instructions [here](http://www.gorillatoolkit.org)
-  3. Download this library
+  2b. Retrieve Gorilla/Websocket - [here](https://github.com/gorilla/websocket)
+  3. Download this library [here](https://gobot.io/documentation/getting-started/)
   4. Complie everything using the [Go build command](https://golang.org/pkg/go/build/)
   5. Start up the server - this is down the filesystem naming, but the preceeding steps should give a binsry execuable
 
