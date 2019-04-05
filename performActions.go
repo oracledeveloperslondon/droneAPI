@@ -17,12 +17,14 @@ func droneActionHandler(w http.ResponseWriter, request *http.Request) {
 		switch action {
 		case dronecore.TAKEOFF:
 			if myDrone.GetStatus() != dronecore.Flying {
+				go sendAction(action)
 				myDrone.Takeoff()
 			} else {
 				status = http.StatusBadRequest
 			}
 		case dronecore.LAND:
 			if myDrone.GetStatus() == dronecore.Flying {
+				go sendAction(action)
 				myDrone.Land()
 			} else {
 				status = http.StatusBadRequest

@@ -20,7 +20,7 @@ func droneSimpleNavRollHandler(w http.ResponseWriter, r *http.Request) {
 	
 		drone.SetRoll(roll)
 		
-		go sendMessage("0", strconv.Itoa(roll), "0")
+		go sendMessage("0", strconv.Itoa(roll), "0", "0")
 
 		msg := "Roll received " + strconv.Itoa(roll) + " for " + droneName
 		w.WriteHeader(http.StatusOK)
@@ -45,7 +45,7 @@ func droneSimpleNavYawHandler(w http.ResponseWriter, r *http.Request) {
 	
 		drone.SetYaw(yaw)
 		
-		go sendMessage(strconv.Itoa(yaw), "0", "0")
+		go sendMessage(strconv.Itoa(yaw), "0", "0", "0")
 
 		msg := "Yaw received " + strconv.Itoa(yaw) + " for " + droneName
 		w.WriteHeader(http.StatusOK)
@@ -71,7 +71,7 @@ func droneSimpleNavGazHandler(w http.ResponseWriter, r *http.Request) {
 	
 		drone.SetGaz(gaz)
 		
-		go sendMessage("0", "0", strconv.Itoa(gaz))
+		go sendMessage("0", "0", "0", strconv.Itoa(gaz))
 
 		msg := "Gaz received " + strconv.Itoa(gaz) + " for " + droneName
 		w.WriteHeader(http.StatusOK)
