@@ -17,14 +17,19 @@ const (
 	TEXTENC  = "text/plain"
 )
 
+type actionMessage struct {
+	Action string
+}
+
 type message struct {
     Movement movementData `json:"movement"`
 }
 
 type movementData struct {
     Yaw string `json:"yaw"`
+		Pitch string `json:"pitch"`
     Roll string `json:"roll"`
-	Pitch string `json:"pitch"`
+    Gaz string `json:"gaz"`
 }
 
 var drones *dronecore.DroneService
@@ -45,13 +50,29 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 	
 }
 
-func sendMessage(yaw string, roll string, pitch string) {
+func sendMessage(yaw string, roll string, pitch string, gaz string) {
 
-	m := message{movementData{Yaw: yaw, Roll: roll, Pitch: pitch}}
+	m := message{movementData{Yaw: yaw, Roll: roll, Pitch: pitch, Gaz: gaz}}
 	
 	if conn != nil {
 		
 		if err := conn.WriteJSON(m); err != nil {
+			Trace.Println(err)
+		}
+		
+	} else {
+		Info.Println("No websocket connection")
+	}
+	
+}
+
+func sendAction(action string) {
+
+	a := actionMessage{Action: action}
+	
+	if conn != nil {
+		
+		if err := conn.WriteJSON(a); err != nil {
 			Trace.Println(err)
 		}
 		
