@@ -4,7 +4,7 @@ The Drone API project has come about as a result of wanting to offer REST APIs t
 The development of the platform wraps and extends the [Gobot](https://gobot.io/) framework so eventually the framework could be utilized to provide APIs on any of the Gobot supported drones. Today the focus is entirely on the use of the [Parrot Bebop 2 drone](https://www.parrot.com/uk/drones/parrot-bebop-2)
 
 # How We Have Developed the APIs
-An [API First approasch](http://www.api-first.com/) - as a result the API Blueprint has been developed and is periodically committed to this GitHub repo. By adopting an API 1st approach it means that anyone can start building against the APIs whilst we build out the layer around Gobot
+An [API First approach](http://www.api-first.com/) - as a result the API Blueprint has been developed and is periodically committed to this GitHub repo. By adopting an API 1st approach it means that anyone can start building against the APIs whilst we build out the layer around Gobot
 
 The [API Blueprint](https://app.apiary.io/dronedevmeetup/) can be seen [here](https://app.apiary.io/dronedevmeetup/).
 
