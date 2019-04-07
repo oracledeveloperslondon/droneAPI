@@ -8,6 +8,10 @@ An [API First approach](http://www.api-first.com/) - as a result the API Bluepri
 
 The [API Blueprint](https://app.apiary.io/dronedevmeetup/) can be seen [here](https://app.apiary.io/dronedevmeetup/).
 
+One of the important things to understand is the axis that impact flight:
+![Control Pane Axis](https://emissarydrones.com/wp-content/uploads/2016/09/Pitch-Roll-and-Yaw-768x508.jpg).
+More information from [here](https://emissarydrones.com/what-is-roll-pitch-and-yaw)
+
 ## Implementation Details
 
 The API layer is obviously also written in [Go](http://golang.org).  Go is a well supported and mature language with strong typing like Java, but has characteristics of C by being explicit about the use of pointers, there is no class inheritance, data structures are defined using struc definitions and methods can be part of an interface, as a result polymorphic behaviour is easy to achieve. Go also offers the more relaxed approach to the need for semicolons, type definitions you see in [Groovy](http://groovy-lang.org). 
