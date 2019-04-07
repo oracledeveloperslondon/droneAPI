@@ -6,7 +6,7 @@ The development of the platform wraps and extends the [Gobot](https://gobot.io/)
 # How We Have Developed the APIs
 An [API First approasch](http://www.api-first.com/) - as a result the API Blueprint has been developed and is periodically committed to this GitHub repo. By adopting an API 1st approach it means that anyone can start building against the APIs whilst we build out the layer around Gobot
 
-The API Blueprint can be seen [here](https://app.apiary.io/dronedevmeetup/).
+The [API Blueprint](https://app.apiary.io/dronedevmeetup/) can be seen [here](https://app.apiary.io/dronedevmeetup/).
 
 ## Implementation Details
 
